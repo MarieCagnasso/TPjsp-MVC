@@ -4,9 +4,17 @@
         <servlet-name>ShowCodeControler</servlet-name>
         <servlet-class>fr.rima.tpjsp.mvc.controler.ShowCodeControler</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>DeleteCodeControler</servlet-name>
+        <servlet-class>fr.rima.tpjsp.mvc.controler.DeleteCodeControler</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ShowCodeControler</servlet-name>
         <url-pattern>/ShowCodeControler</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteCodeControler</servlet-name>
+        <url-pattern>/DeleteCodeControler</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

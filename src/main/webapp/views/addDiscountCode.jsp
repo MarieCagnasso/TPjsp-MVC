@@ -58,9 +58,9 @@
             <div class="thead"><div class="td">Code</div><div class="td">Taux</div><div class="td">Action</div></div>
             <div class="tbody">
                 <c:forEach var="code" items="${codes}">
-                    <form class="tr" method="POST">
+                    <form class="tr" method="GET">
                             <div class="td"><input type="text" name="code" value="${code.getDiscountCode()}" readonly/></div>
-                            <div class="td"><input name="taux" type="number" step="0.01" min="0.0" max="99.99" size="5" value="${code.getRate()}"/></div>
+                            <div class="td">${code.getRate()}</div>
                             <div class="td"><input type="submit" name="action" value="DELETE"/></div>
                     </form>	  
             </c:forEach>

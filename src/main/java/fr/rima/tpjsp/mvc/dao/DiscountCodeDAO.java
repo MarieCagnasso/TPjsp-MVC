@@ -74,4 +74,30 @@ public class DiscountCodeDAO {
             }
             
         }
+        
+        /**
+	 * Detruire un enregistrement dans la table DISCOUNT_CODE
+	 * @param code le code du discount code
+	 * @return le nombre d'enregistrements détruits (1 ou 0 si pas trouvé)
+	 * @throws DAOException
+	 */
+	public int deleteCode(String code) throws DAOException {
+
+		// Une requête SQL paramétrée
+		String sql = "DELETE FROM DISCOUNT_CODE WHERE DISCOUNT_CODE = ?";
+		try (   Connection connection = myDataSource.getConnection();
+			PreparedStatement stmt = connection.prepareStatement(sql)
+                ) {
+                        // Définir la valeur du paramètre
+			stmt.setString(1, code);
+			
+			return stmt.executeUpdate();
+
+		}  catch (SQLException ex) {
+			Logger.getLogger("DAO").log(Level.SEVERE, null, ex);
+			throw new DAOException(ex.getMessage());
+		}
+	}
+        
+        
 }

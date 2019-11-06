@@ -20,6 +20,7 @@ import fr.rima.tpjsp.mvc.data.DataSourceFactory;
 
 import fr.rima.tpjsp.mvc.dao.DiscountCodeDAO;
 import fr.rima.tpjsp.mvc.model.DiscountCodeEntity;
+import static java.lang.System.console;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
@@ -71,19 +72,25 @@ public class ShowCodeControler extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-       
         try {
             
             DiscountCodeDAO dao = new DiscountCodeDAO(DataSourceFactory.getDataSource());
             String code = request.getParameter("code");
             String val = request.getParameter("taux");
+            String action = request.getParameter("action");
             
             // ajoute un nv dicount code
-            if (code != null || val!=null ) {
+            if (code != null && val!=null && "ADD".equals(action)) {
                 Float taux = Float.valueOf(val);
                 
                 if (dao.addCode(code, taux) ==0) {
                     throw new DAOException("Ajout impossible");
+                }
+            }
+            //supprimer code
+            if(code != null && "DELETE".equals(action)){
+                if (dao.deleteCode(code) ==0) {
+                    throw new DAOException("Suppresion impossible");
                 }
             }
             
@@ -93,7 +100,6 @@ public class ShowCodeControler extends HttpServlet {
             String jspView = "addDiscountCode.jsp";
             request.getRequestDispatcher("views/" + jspView).forward(request, response);
 
-            
         }
         catch (DAOException ex) {
             Logger.getLogger(ShowCodeControler.class.getName()).log(Level.SEVERE, null, ex);
