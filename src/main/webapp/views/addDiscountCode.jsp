@@ -45,7 +45,7 @@
     <body>
         <!-- On montre le formulaire de saisie -->
         <h1>Edition des taux de remise</h1>
-        <form method='POST'>
+        <form method='GET'>
                 Code : <input name="code" size="1" maxlength="1" pattern="[A-Z]{1}+" title="Une lettre en MAJUSCULES"><br/>
                 Taux : <input name="taux" type="number" step="0.01" min="0.0" max="99.99" size="5"><br/>
                 <input type="hidden" name="action" value="ADD">

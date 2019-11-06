@@ -54,4 +54,24 @@ public class DiscountCodeDAO {
 
             return rep;
         }
+        
+        public int addCode(String key, Float taux) throws DAOException{
+            
+            String sql = "INSERT INTO DISCOUNT_CODE (DISCOUNT_CODE, RATE ) VALUES (?,?)  ";
+            
+            try (   Connection connection = myDataSource.getConnection();
+			PreparedStatement stmt = connection.prepareStatement(sql)
+            ) {
+                stmt.setString(1,key);
+                stmt.setFloat(2, taux);
+			
+		return stmt.executeUpdate();
+
+            }  
+            catch (SQLException ex) {
+                Logger.getLogger("DAO").log(Level.SEVERE, null, ex);
+                throw new DAOException(ex.getMessage());
+            }
+            
+        }
 }
