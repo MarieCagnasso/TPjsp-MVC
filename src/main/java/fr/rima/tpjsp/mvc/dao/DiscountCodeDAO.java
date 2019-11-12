@@ -55,6 +55,12 @@ public class DiscountCodeDAO {
             return rep;
         }
         
+        /**
+	 * Ajouter un enregistrement dans la table DISCOUNT_CODE
+	 * @param key le code du discount code, taux le taux de réduction
+	 * @return le nombre d'enregistrements détruits (1 ou 0 si pas trouvé)
+	 * @throws DAOException
+	 */
         public int addCode(String key, Float taux) throws DAOException{
             
             String sql = "INSERT INTO DISCOUNT_CODE (DISCOUNT_CODE, RATE ) VALUES (?,?)  ";

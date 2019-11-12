@@ -21,6 +21,7 @@ import fr.rima.tpjsp.mvc.data.DataSourceFactory;
 import fr.rima.tpjsp.mvc.dao.DiscountCodeDAO;
 import fr.rima.tpjsp.mvc.model.DiscountCodeEntity;
 import static java.lang.System.console;
+import static java.lang.System.out;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
@@ -78,25 +79,38 @@ public class ShowCodeControler extends HttpServlet {
             String code = request.getParameter("code");
             String val = request.getParameter("taux");
             String action = request.getParameter("action");
+            String msg ="";
             
             // ajoute un nv dicount code
-            if (code != null && val!=null && "ADD".equals(action)) {
-                Float taux = Float.valueOf(val);
-                
-                if (dao.addCode(code, taux) ==0) {
-                    throw new DAOException("Ajout impossible");
+            try{
+                if (code != null && val!=null && "ADD".equals(action)) {
+                    Float taux = Float.valueOf(val);
+                    if (dao.addCode(code, taux) ==0) {
+                       throw new Exception("Ajout impossible");
+                    }
+                    msg = "Le code "+code+" a été ajouté.";
+                }
+            }catch(Exception e){
+                msg = "Le code "+code+" existe déjà";
+            }
+            
+            //supprimer code
+            try{
+                if(code != null && "DELETE".equals(action)){
+                    if (dao.deleteCode(code) ==0) {
+                   
+                      throw new Exception("Suppresion impossible");
+                    }
                 }
             }
-            //supprimer code
-            if(code != null && "DELETE".equals(action)){
-                if (dao.deleteCode(code) ==0) {
-                    throw new DAOException("Suppresion impossible");
-                }
+            catch(Exception e){
+                msg = "Le code "+code+" ne peut être suprimé";
             }
             
             // Affiche la page standart 
             List<DiscountCodeEntity> codes = dao.showAllCode();
             request.setAttribute("codes", codes);
+            request.setAttribute("msg", msg);
             String jspView = "addDiscountCode.jsp";
             request.getRequestDispatcher("views/" + jspView).forward(request, response);
 
